@@ -97,9 +97,9 @@
   (let [buffer (StringBuilder. (.Length s))]
     (dochars [c s]
       (if-let [r (cmap c)]
-        (.append buffer r)
-        (.append buffer c)))
-    (.toString buffer)))
+        (.Append buffer r)
+        (.Append buffer c)))
+    (.ToString buffer)))
 
 (defn blank?
   "True if s is nil, empty, or contains only whitespace."
@@ -147,7 +147,7 @@
   "Returns s with its characters reversed."
   {:deprecated "1.2"}
   [^String s]
-  (.toString (.reverse (StringBuilder. s))))
+  (.ToString (.reverse (StringBuilder. s))))
 
 (defn replace-str
   "Replaces all instances of substring a with b in s."
@@ -180,7 +180,7 @@
           (do (.appendReplacement m buffer (f (re-groups m)))
               (recur))
           (do (.appendTail m buffer)
-              (.toString buffer)))))))
+              (.ToString buffer)))))))
 
 (defn replace-first-str
   "Replace first occurance of substring a with b in s."
@@ -267,9 +267,9 @@
       (if (Char/IsLowerCase c)
         ;; Character.toUpperCase is not locale-sensitive, but
         ;; String.toUpperCase is; so we use a String.
-        (.append buffer (.toUpperCase (String. array 0 1)))
-        (.append buffer (.toLowerCase (String. array 0 1)))))
-    (.toString buffer)))
+        (.Append buffer (.toUpperCase (String. array 0 1)))
+        (.Append buffer (.toLowerCase (String. array 0 1)))))
+    (.ToString buffer)))
 
 (defn ^String capitalize
   "Converts first character of the string to upper-case, all other

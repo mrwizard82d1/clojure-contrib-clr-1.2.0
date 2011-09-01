@@ -7,12 +7,12 @@
          (s/codepoints "foo\uD800\uDC00bar"))
       "Handles Unicode supplementary characters"))
 
-;; (deftest t-escape
-;;   (is (= "&lt;foo&amp;bar&gt;"
-;;          (s/escape {\& "&amp;" \< "&lt;" \> "&gt;"} "<foo&bar>")))
-;;   (is (= " \\\"foo\\\" "
-;;          (s/escape {\" "\\\""} " \"foo\" " )))
-;;   (is (= "faabor" (s/escape {\a \o, \o \a} "foobar"))))
+(deftest t-escape
+  (is (= "&lt;foo&amp;bar&gt;"
+         (s/escape {\& "&amp;" \< "&lt;" \> "&gt;"} "<foo&bar>")))
+  (is (= " \\\"foo\\\" "
+         (s/escape {\" "\\\""} " \"foo\" " )))
+  (is (= "faabor" (s/escape {\a \o, \o \a} "foobar"))))
 
 ;; (deftest t-blank
 ;;   (is (s/blank? nil))
