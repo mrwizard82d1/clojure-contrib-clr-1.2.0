@@ -32,7 +32,7 @@
  clojure.contrib.string
  (:refer-clojure :exclude (take replace drop butlast partition
                            contains? get repeat reverse partial))
- (:import (java.util.regex Pattern)))
+ (:import (System.Text.RegularExpressions Regex)))
 
 
 (defmacro dochars 
@@ -67,7 +67,7 @@
        (loop [i# 0]
          (when (< i# len#)
            (let [~character (.charAt s# i#)]
-             (if (Character/isHighSurrogate ~character)
+             (if (Char/IsHighSurrogate ~character)
                (let [~character (.codePointAt s# i#)]
                  ~@body
                  (recur (+ 2 i#)))
@@ -83,7 +83,7 @@
         f (fn thisfn [^String s i]
             (when (< i len)
               (let [c (.charAt s i)]
-                (if (Character/isHighSurrogate c)
+                (if (Char/IsHighSurrogate c)
                   (cons (.codePointAt s i) (thisfn s (+ 2 i)))
                   (cons (int c) (thisfn s (inc i)))))))]
     (lazy-seq (f s 0))))
@@ -105,7 +105,8 @@
   "True if s is nil, empty, or contains only whitespace."
   {:deprecated "1.2"}
   [^String s]
-  (every? (fn [^Character c] (Character/isWhitespace c)) s))
+  ;; (every? (fn [^Char c] (Char/IsWhitespace c)) s))
+  (every? (fn [c] (Char/IsWhitespace c)) s))
 
 (defn ^String take
   "Take first n characters from s, up to the length of s."
@@ -152,13 +153,14 @@
   "Replaces all instances of substring a with b in s."
   {:deprecated "1.2"}
   [^String a ^String b ^String s]
-  (.replace s a b))
+  (.Replace s a b))
 
 (defn replace-char
   "Replaces all instances of character a with character b in s."
   {:deprecated "1.2"}
-  [^Character a ^Character b ^String s]
-  (.replace s a b))
+  ;; [^Char a ^Char b ^String s]
+  [a b s]
+  (.Replace s a b))
 
 (defn replace-re
   "Replaces all matches of re with replacement in s."
@@ -172,7 +174,7 @@
   {:deprecated "1.2"}
   [re f ^String s]
   (let [m (re-matcher re s)]
-    (let [buffer (StringBuffer. (.length s))]
+    (let [buffer (StringBuilder. (.length s))]
       (loop []
         (if (.find m)
           (do (.appendReplacement m buffer (f (re-groups m)))
@@ -184,21 +186,21 @@
   "Replace first occurance of substring a with b in s."
   {:deprecated "1.2"}
   [^String a ^String b ^String s]
-  (.replaceFirst (re-matcher (Pattern/quote a) s) b))
+  (.replaceFirst (re-matcher (Regex/Escape a) s) b))
 
 (defn replace-first-re
   "Replace first match of re in s."
   {:deprecated "1.2"}
-  [^Pattern re ^String replacement ^String s]
+  [^Regex re ^String replacement ^String s]
   (.replaceFirst (re-matcher re s) replacement))
 
 (defn replace-first-by
   "Replace first match of re in s with the result of
   (f (re-groups the-match))."
   {:deprecated "1.2"}
-  [^Pattern re f ^String s]
+  [^Regex re f ^String s]
   (let [m (re-matcher re s)]
-    (let [buffer (StringBuffer.)]
+    (let [buffer (StringBuilder.)]
       (if (.find m)
         (let [rep (f (re-groups m))]
           (.appendReplacement m buffer rep)
@@ -214,7 +216,7 @@
 
   For example: (partition #\"[a-z]+\" \"abc123def\")
   returns: (\"\" \"abc\" \"123\" \"def\")"
-  [^Pattern re ^String s]
+  [^Regex re ^String s]
   (let [m (re-matcher re s)]
     ((fn step [prevend]
        (lazy-seq
@@ -258,10 +260,11 @@
   [^String s]
   (let [buffer (StringBuilder. (.length s))
         ;; array to make a String from one code point
-        ^"[I" array (make-array Integer/TYPE 1)]
+        ;;^"[I" array (make-array Int32 1)]
+        array (make-array Int32 1)]
     (docodepoints [c s]
       (aset-int array 0 c)
-      (if (Character/isLowerCase c)
+      (if (Char/IsLowerCase c)
         ;; Character.toUpperCase is not locale-sensitive, but
         ;; String.toUpperCase is; so we use a String.
         (.append buffer (.toUpperCase (String. array 0 1)))
@@ -360,8 +363,8 @@
   "Splits string on a regular expression.  Optional argument limit is
   the maximum number of splits."
   {:deprecated "1.2"}
-  ([^Pattern re ^String s] (seq (.split re s)))
-  ([^Pattern re limit ^String s] (seq (.split re s limit))))
+  ([^Regex re ^String s] (seq (.split re s)))
+  ([^Regex re limit ^String s] (seq (.split re s limit))))
 
 (defn ^String trim
   "Removes whitespace from both ends of string."
