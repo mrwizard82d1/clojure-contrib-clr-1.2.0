@@ -46,8 +46,8 @@
   (assert (= 2 (count bindings)))
   ;; This seems to be the fastest way to iterate over characters.
   `(let [^String s# ~(second bindings)]
-     (dotimes [i# (.length s#)]
-       (let [~(first bindings) (.charAt s# i#)]
+     (dotimes [i# (.Length s#)]
+       (let [~(first bindings) (aget (.ToCharArray s#) i#)]
          ~@body))))
 
 
@@ -63,12 +63,12 @@
   (let [character (first bindings)
         string (second bindings)]
     `(let [^String s# ~string
-           len# (.length s#)]
+           len# (.Length s#)]
        (loop [i# 0]
          (when (< i# len#)
-           (let [~character (.charAt s# i#)]
+           (let [~character (aget (.ToCharArray s#) i#)]
              (if (Char/IsHighSurrogate ~character)
-               (let [~character (.codePointAt s# i#)]
+               (let [~character (Char/ConvertToUtf32 s# i#)]
                  ~@body
                  (recur (+ 2 i#)))
                (let [~character (int ~character)]
@@ -79,12 +79,12 @@
   "Returns a sequence of integer Unicode code points in s.  Handles
   Unicode supplementary characters (above U+FFFF) correctly."
   [^String s]
-  (let [len (.length s)
+  (let [len (.Length s)
         f (fn thisfn [^String s i]
             (when (< i len)
-              (let [c (.charAt s i)]
+              (let [c (aget (.ToCharArray s) i)]
                 (if (Char/IsHighSurrogate c)
-                  (cons (.codePointAt s i) (thisfn s (+ 2 i)))
+                  (cons (Char/ConvertToUtf32 s i) (thisfn s (+ 2 i)))
                   (cons (int c) (thisfn s (inc i)))))))]
     (lazy-seq (f s 0))))
 
@@ -94,7 +94,7 @@
    added to the output unchanged."
    {:deprecated "1.2"}
   [cmap ^String s]
-  (let [buffer (StringBuilder. (.length s))]
+  (let [buffer (StringBuilder. (.Length s))]
     (dochars [c s]
       (if-let [r (cmap c)]
         (.append buffer r)
@@ -174,7 +174,7 @@
   {:deprecated "1.2"}
   [re f ^String s]
   (let [m (re-matcher re s)]
-    (let [buffer (StringBuilder. (.length s))]
+    (let [buffer (StringBuilder. (.Length s))]
       (loop []
         (if (.find m)
           (do (.appendReplacement m buffer (f (re-groups m)))
@@ -224,8 +224,8 @@
           (cons (.subSequence s prevend (.start m))
                 (cons (re-groups m)
                       (step (+ (.start m) (count (.group m))))))
-          (when (< prevend (.length s))
-            (list (.subSequence s prevend (.length s)))))))
+          (when (< prevend (.Length s))
+            (list (.subSequence s prevend (.Length s)))))))
      0)))
 
 (defn ^String join
@@ -258,7 +258,7 @@
   locale-sensitive String.toUpperCase() and String.toLowerCase()
   methods."
   [^String s]
-  (let [buffer (StringBuilder. (.length s))
+  (let [buffer (StringBuilder. (.Length s))
         ;; array to make a String from one code point
         ;;^"[I" array (make-array Int32 1)]
         array (make-array Int32 1)]
@@ -381,5 +381,5 @@
   "Gets the i'th character in string."
   {:deprecated "1.2"}
   [^String s i]
-  (.charAt s i))
+  (aget (.ToCharArray s) i))
 
