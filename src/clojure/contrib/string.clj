@@ -11,6 +11,8 @@
 ;; agreeing to be bound by the terms of this license.  You must not
 ;; remove this notice, or any other, from this software.
 
+;; Ported to the CLR by Larry Jones.
+
 ;; DEPRECATED in 1.2: Many functions have moved to clojure.string.
 
 (ns ^{:author "Stuart Sierra"
@@ -32,7 +34,8 @@
  clojure.contrib.string
  (:refer-clojure :exclude (take replace drop butlast partition
                            contains? get repeat reverse partial))
- (:import (System.Text.RegularExpressions Regex)))
+ (:import (System.Text.RegularExpressions Regex
+					  MatchEvaluator)))
 
 
 (defmacro dochars 
@@ -175,14 +178,8 @@
   (f (re-groups the-match))."
   {:deprecated "1.2"}
   [re f ^String s]
-  (let [m (re-matcher re s)]
-    (let [buffer (StringBuilder. (.Length s))]
-      (loop []
-        (if (.find m)
-          (do (.appendReplacement m buffer (f (re-groups m)))
-              (recur))
-          (do (.appendTail m buffer)
-              (.ToString buffer)))))))
+  (.Replace re s (gen-delegate MatchEvaluator [m]
+			       (f (str m)))))
 
 (defn replace-first-str
   "Replace first occurance of substring a with b in s."
@@ -194,7 +191,7 @@
   "Replace first match of re in s."
   {:deprecated "1.2"}
   [^Regex re ^String replacement ^String s]
-  (.replaceFirst (re-matcher re s) replacement))
+  (.Replace re s replacement 1))
 
 (defn replace-first-by
   "Replace first match of re in s with the result of

@@ -47,10 +47,10 @@
 (deftest t-reverse
   (is (= "tab" (s/reverse "bat"))))
 
-;; (deftest t-replace
-;;   (is (= "faabar" (s/replace-char \o \a "foobar")))
-;;   (is (= "barbarbar" (s/replace-str "foo" "bar" "foobarfoo")))
-;;   (is (= "FOObarFOO" (s/replace-by #"foo" s/upper-case  "foobarfoo"))))
+(deftest t-replace
+  (is (= "faabar" (s/replace-char \o \a "foobar")))
+  (is (= "barbarbar" (s/replace-str "foo" "bar" "foobarfoo")))
+  (is (= "FOObarFOO" (s/replace-by #"foo" s/upper-case  "foobarfoo"))))
 
 ;; (deftest t-replace-first
 ;;   (is (= "barbarfoo" (s/replace-first-re #"foo" "bar" "foobarfoo")))
