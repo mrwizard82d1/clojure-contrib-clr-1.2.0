@@ -147,7 +147,9 @@
   "Returns s with its characters reversed."
   {:deprecated "1.2"}
   [^String s]
-  (.ToString (.reverse (StringBuilder. s))))
+  (let [chars (.ToCharArray s)]
+    (Array/Reverse chars)
+    (String. chars)))
 
 (defn replace-str
   "Replaces all instances of substring a with b in s."
@@ -267,8 +269,8 @@
       (if (Char/IsLowerCase c)
         ;; Character.toUpperCase is not locale-sensitive, but
         ;; String.toUpperCase is; so we use a String.
-        (.Append buffer (.toUpperCase (String. array 0 1)))
-        (.Append buffer (.toLowerCase (String. array 0 1)))))
+        (.Append buffer (.ToUpper (String. array 0 1)))
+        (.Append buffer (.ToLower (String. array 0 1)))))
     (.ToString buffer)))
 
 (defn ^String capitalize
@@ -277,9 +279,9 @@
   {:deprecated "1.2"}
   [^String s]
   (if (< (count s) 2)
-    (.toUpperCase s)
-    (str (.toUpperCase ^String (subs s 0 1))
-         (.toLowerCase ^String (subs s 1)))))
+    (.ToUpper s)
+    (str (.ToUpper ^String (subs s 0 1))
+         (.ToLower ^String (subs s 1)))))
 
 (defn ^String ltrim
   "Removes whitespace from the left side of string.
@@ -351,13 +353,13 @@
   "Converts string to all upper-case."
   {:deprecated "1.2"}
   [^String s]
-  (.toUpperCase s))
+  (.ToUpper s))
 
 (defn ^String lower-case
   "Converts string to all lower-case."
   {:deprecated "1.2"}
   [^String s]
-  (.toLowerCase s))
+  (.ToLower s))
 
 (defn split
   "Splits string on a regular expression.  Optional argument limit is

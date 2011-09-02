@@ -44,8 +44,8 @@
 (deftest t-repeat
   (is (= "foofoofoo" (s/repeat 3 "foo"))))
 
-;; (deftest t-reverse
-;;   (is (= "tab" (s/reverse "bat"))))
+(deftest t-reverse
+  (is (= "tab" (s/reverse "bat"))))
 
 ;; (deftest t-replace
 ;;   (is (= "faabar" (s/replace-char \o \a "foobar")))
