@@ -105,15 +105,15 @@
   "True if s is nil, empty, or contains only whitespace."
   {:deprecated "1.2"}
   [^String s]
-  ;; (every? (fn [^Char c] (Char/IsWhitespace c)) s))
-  (every? (fn [c] (Char/IsWhitespace c)) s))
+  (every? (fn [^Char c] (Char/IsWhiteSpace c)) s))
+  ;; (every? (fn [c] (Char/IsWhiteSpace c)) s))
 
 (defn ^String take
   "Take first n characters from s, up to the length of s."
   [n ^String s]
   (if (< (count s) n)
     s
-    (.substring s 0 n)))
+    (.Substring s 0 n)))
 
 (defn ^String drop
   "Drops first n characters from s.  Returns an empty string if n is
@@ -121,7 +121,7 @@
   [n ^String s]
   (if (< (count s) n)
     ""
-    (.substring s n)))
+    (.Substring s n)))
 
 (defn ^String butlast
   "Returns s without the last n characters.  Returns an empty string
@@ -129,14 +129,14 @@
   [n ^String s]
   (if (< (count s) n)
     ""
-    (.substring s 0 (- (count s) n))))
+    (.Substring s 0 (- (count s) n))))
 
 (defn ^String tail
   "Returns the last n characters of s."
   [n ^String s]
   (if (< (count s) n)
     s
-    (.substring s (- (count s) n))))
+    (.Substring s (- (count s) n))))
 
 (defn ^String repeat
   "Returns a new String containing s repeated n times."

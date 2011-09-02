@@ -14,35 +14,35 @@
          (s/escape {\" "\\\""} " \"foo\" " )))
   (is (= "faabor" (s/escape {\a \o, \o \a} "foobar"))))
 
-;; (deftest t-blank
-;;   (is (s/blank? nil))
-;;   (is (s/blank? ""))
-;;   (is (s/blank? " "))
-;;   (is (s/blank? " \t \n  \r "))
-;;   (is (not (s/blank? "  foo  "))))
+(deftest t-blank
+  (is (s/blank? nil))
+  (is (s/blank? ""))
+  (is (s/blank? " "))
+  (is (s/blank? " \t \n  \r "))
+  (is (not (s/blank? "  foo  "))))
 
-;; (deftest t-take
-;;   (is (= "foo" (s/take 3 "foobar")))
-;;   (is (= "foobar" (s/take 7 "foobar")))
-;;   (is (= "" (s/take 0 "foo"))))
+(deftest t-take
+  (is (= "foo" (s/take 3 "foobar")))
+  (is (= "foobar" (s/take 7 "foobar")))
+  (is (= "" (s/take 0 "foo"))))
 
-;; (deftest t-drop
-;;   (is (= "bar" (s/drop 3 "foobar")))
-;;   (is (= "" (s/drop 9 "foobar")))
-;;   (is (= "foobar" (s/drop 0 "foobar"))))
+(deftest t-drop
+  (is (= "bar" (s/drop 3 "foobar")))
+  (is (= "" (s/drop 9 "foobar")))
+  (is (= "foobar" (s/drop 0 "foobar"))))
 
-;; (deftest t-butlast
-;;   (is (= "foob" (s/butlast 2 "foobar")))
-;;   (is (= "" (s/butlast 9 "foobar")))
-;;   (is (= "foobar" (s/butlast 0 "foobar"))))
+(deftest t-butlast
+  (is (= "foob" (s/butlast 2 "foobar")))
+  (is (= "" (s/butlast 9 "foobar")))
+  (is (= "foobar" (s/butlast 0 "foobar"))))
 
-;; (deftest t-tail
-;;   (is (= "ar" (s/tail 2 "foobar")))
-;;   (is (= "foobar" (s/tail 9 "foobar")))
-;;   (is (= "" (s/tail 0 "foobar"))))
+(deftest t-tail
+  (is (= "ar" (s/tail 2 "foobar")))
+  (is (= "foobar" (s/tail 9 "foobar")))
+  (is (= "" (s/tail 0 "foobar"))))
 
-;; (deftest t-repeat
-;;   (is (= "foofoofoo" (s/repeat 3 "foo"))))
+(deftest t-repeat
+  (is (= "foofoofoo" (s/repeat 3 "foo"))))
 
 ;; (deftest t-reverse
 ;;   (is (= "tab" (s/reverse "bat"))))
