@@ -52,9 +52,9 @@
   (is (= "barbarbar" (s/replace-str "foo" "bar" "foobarfoo")))
   (is (= "FOObarFOO" (s/replace-by #"foo" s/upper-case  "foobarfoo"))))
 
-;; (deftest t-replace-first
-;;   (is (= "barbarfoo" (s/replace-first-re #"foo" "bar" "foobarfoo")))
-;;   (is (= "FOObarfoo" (s/replace-first-by #"foo" s/upper-case "foobarfoo"))))
+(deftest t-replace-first
+  (is (= "barbarfoo" (s/replace-first-re #"foo" "bar" "foobarfoo")))
+  (is (= "FOObarfoo" (s/replace-first-by #"foo" s/upper-case "foobarfoo"))))
 
 ;; (deftest t-partition
 ;;   (is (= (list "" "abc" "123" "def")

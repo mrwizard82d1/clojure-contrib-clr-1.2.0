@@ -198,13 +198,9 @@
   (f (re-groups the-match))."
   {:deprecated "1.2"}
   [^Regex re f ^String s]
-  (let [m (re-matcher re s)]
-    (let [buffer (StringBuilder.)]
-      (if (.find m)
-        (let [rep (f (re-groups m))]
-          (.appendReplacement m buffer rep)
-          (.appendTail m buffer)
-          (str buffer))))))
+  (.Replace re s
+	    (gen-delegate MatchEvaluator [m] (f (str m)))
+	    1))
 
 (defn partition
   "Splits the string into a lazy sequence of substrings, alternating
