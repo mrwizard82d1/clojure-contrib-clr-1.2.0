@@ -80,45 +80,45 @@
   (is (= "fOO!bAR" (s/swap-case "Foo!Bar")))
   (is (= "" (s/swap-case ""))))
 
-;; (deftest t-capitalize
-;;   (is (= "Foobar" (s/capitalize "foobar")))
-;;   (is (= "Foobar" (s/capitalize "FOOBAR"))))
+(deftest t-capitalize
+  (is (= "Foobar" (s/capitalize "foobar")))
+  (is (= "Foobar" (s/capitalize "FOOBAR"))))
 
-;; (deftest t-ltrim
-;;   (is (= "foo " (s/ltrim " foo ")))
-;;   (is (= "" (s/ltrim "   "))))
+(deftest t-ltrim
+  (is (= "foo " (s/ltrim " foo ")))
+  (is (= "" (s/ltrim "   "))))
 
-;; (deftest t-rtrim
-;;   (is (= " foo" (s/rtrim " foo ")))
-;;   (is (= "" (s/rtrim "   "))))
+(deftest t-rtrim
+  (is (= " foo" (s/rtrim " foo ")))
+  (is (= "" (s/rtrim "   "))))
 
-;; (deftest t-split-lines
-;;   (is (= (list "one" "two" "three")
-;;          (s/split-lines "one\ntwo\r\nthree")))
-;;   (is (= (list "foo") (s/split-lines "foo"))))
+(deftest t-split-lines
+  (is (= (list "one" "two" "three")
+         (s/split-lines "one\ntwo\r\nthree")))
+  (is (= (list "foo") (s/split-lines "foo"))))
 
-;; (deftest t-upper-case
-;;   (is (= "FOOBAR" (s/upper-case "Foobar"))))
+(deftest t-upper-case
+  (is (= "FOOBAR" (s/upper-case "Foobar"))))
 
-;; (deftest t-lower-case
-;;   (is (= "foobar" (s/lower-case "FooBar"))))
+(deftest t-lower-case
+  (is (= "foobar" (s/lower-case "FooBar"))))
 
-;; (deftest t-trim
-;;   (is (= "foo" (s/trim "  foo  \r\n"))))
+(deftest t-trim
+  (is (= "foo" (s/trim "  foo  \r\n"))))
 
-;; (deftest t-substring
-;;   (is (s/substring? "foo" "foobar"))
-;;   (is (not (s/substring? "baz" "foobar"))))
+(deftest t-substring
+  (is (s/substring? "foo" "foobar"))
+  (is (not (s/substring? "baz" "foobar"))))
 
-;; (deftest t-get
-;;   (is (= \o (s/get "foo" 1))))
+(deftest t-get
+  (is (= \o (s/get "foo" 1))))
 
-;; (deftest t-as-str
-;;   (testing "keyword to string"
-;;     (is (= "foo") (s/as-str :foo)))
-;;   (testing "symbol to string"
-;;     (is (= "foo") (s/as-str 'foo)))
-;;   (testing "string to string"
-;;     (is (= "foo") (s/as-str "foo")))
-;;   (testing "stringifying non-namish things"
-;;     (is (= "42") (s/as-str 42))))
+(deftest t-as-str
+  (testing "keyword to string"
+    (is (= "foo") (s/as-str :foo)))
+  (testing "symbol to string"
+    (is (= "foo") (s/as-str 'foo)))
+  (testing "string to string"
+    (is (= "foo") (s/as-str "foo")))
+  (testing "stringifying non-namish things"
+    (is (= "42") (s/as-str 42))))

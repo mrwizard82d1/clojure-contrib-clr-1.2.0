@@ -290,7 +290,7 @@
   "Splits s on \\n or \\r\\n."
   {:deprecated "1.2"}
   [^String s]
-  (seq (.split #"\r?\n" s)))
+  (seq (.Split #"\r?\n" s)))
 
 ;; borrowed from compojure.string, by James Reeves, EPL 1.0
 (defn ^String map-str
@@ -361,12 +361,12 @@
   "Removes whitespace from both ends of string."
   {:deprecated "1.2"}
   [^String s]
-  (.trim s))
+  (.Trim s))
 
 (defn ^String substring?
   "True if s contains the substring."
   [substring ^String s]
-  (.contains s substring))
+  (.Contains s substring))
 
 (defn ^String get
   "Gets the i'th character in string."
