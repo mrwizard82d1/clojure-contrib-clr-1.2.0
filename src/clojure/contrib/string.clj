@@ -216,11 +216,11 @@
     ((fn step [prevend]
        (lazy-seq
         (if (.find m)
-          (cons (.subSequence s prevend (.start m))
+          (cons (.Substring s prevend (- (.start m) prevend))
                 (cons (re-groups m)
                       (step (+ (.start m) (count (.group m))))))
           (when (< prevend (.Length s))
-            (list (.subSequence s prevend (.Length s)))))))
+            (list (.Substring s prevend))))))
      0)))
 
 (defn ^String join

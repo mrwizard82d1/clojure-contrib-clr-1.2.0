@@ -56,9 +56,9 @@
   (is (= "barbarfoo" (s/replace-first-re #"foo" "bar" "foobarfoo")))
   (is (= "FOObarfoo" (s/replace-first-by #"foo" s/upper-case "foobarfoo"))))
 
-;; (deftest t-partition
-;;   (is (= (list "" "abc" "123" "def")
-;;          (s/partition #"[a-z]+" "abc123def"))))
+(deftest t-partition
+  (is (= (list "" "abc" "123" "def")
+         (s/partition #"[a-z]+" "abc123def"))))
 
 ;; (deftest t-join
 ;;   (is (= "1,2,3" (s/join \, [1 2 3])))
