@@ -253,17 +253,13 @@
   locale-sensitive String.toUpperCase() and String.toLowerCase()
   methods."
   [^String s]
-  (let [buffer (StringBuilder. (.Length s))
-        ;; array to make a String from one code point
-        ;;^"[I" array (make-array Int32 1)]
-        array (make-array Int32 1)]
+  (let [buffer (StringBuilder. (.Length s))]
     (docodepoints [c s]
-      (aset-int array 0 c)
-      (if (Char/IsLowerCase c)
+      (if (Char/IsLower c)
         ;; Character.toUpperCase is not locale-sensitive, but
         ;; String.toUpperCase is; so we use a String.
-        (.Append buffer (.ToUpper (String. array 0 1)))
-        (.Append buffer (.ToLower (String. array 0 1)))))
+        (.Append buffer (Char/ToUpper c))
+        (.Append buffer (Char/ToLower c))))
     (.ToString buffer)))
 
 (defn ^String capitalize

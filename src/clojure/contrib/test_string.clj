@@ -76,9 +76,9 @@
   (is (= "foo" (s/chomp "foo")))
   (is (= "" (s/chomp ""))))
 
-;; (deftest t-swap-case
-;;   (is (= "fOO!bAR" (s/swap-case "Foo!Bar")))
-;;   (is (= "" (s/swap-case ""))))
+(deftest t-swap-case
+  (is (= "fOO!bAR" (s/swap-case "Foo!Bar")))
+  (is (= "" (s/swap-case ""))))
 
 ;; (deftest t-capitalize
 ;;   (is (= "Foobar" (s/capitalize "foobar")))
