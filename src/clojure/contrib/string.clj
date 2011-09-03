@@ -171,7 +171,7 @@
   "Replaces all matches of re with replacement in s."
   {:deprecated "1.2"}
   [re replacement ^String s]
-  (.replaceAll (re-matcher re s) replacement))
+  (.Replace re s replacement))
 
 (defn replace-by
   "Replaces all matches of re in s with the result of 

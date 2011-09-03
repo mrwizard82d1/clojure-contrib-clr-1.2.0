@@ -60,21 +60,21 @@
   (is (= (list "" "abc" "123" "def")
          (s/partition #"[a-z]+" "abc123def"))))
 
-;; (deftest t-join
-;;   (is (= "1,2,3" (s/join \, [1 2 3])))
-;;   (is (= "" (s/join \, [])))
-;;   (is (= "1 and-a 2 and-a 3" (s/join " and-a " [1 2 3]))))
+(deftest t-join
+  (is (= "1,2,3" (s/join \, [1 2 3])))
+  (is (= "" (s/join \, [])))
+  (is (= "1 and-a 2 and-a 3" (s/join " and-a " [1 2 3]))))
 
-;; (deftest t-chop
-;;   (is (= "fo" (s/chop "foo")))
-;;   (is (= "") (s/chop "f"))
-;;   (is (= "") (s/chop "")))
+(deftest t-chop
+  (is (= "fo" (s/chop "foo")))
+  (is (= "") (s/chop "f"))
+  (is (= "") (s/chop "")))
 
-;; (deftest t-chomp
-;;   (is (= "foo" (s/chomp "foo\n")))
-;;   (is (= "foo" (s/chomp "foo\r\n")))
-;;   (is (= "foo" (s/chomp "foo")))
-;;   (is (= "" (s/chomp ""))))
+(deftest t-chomp
+  (is (= "foo" (s/chomp "foo\n")))
+  (is (= "foo" (s/chomp "foo\r\n")))
+  (is (= "foo" (s/chomp "foo")))
+  (is (= "" (s/chomp ""))))
 
 ;; (deftest t-swap-case
 ;;   (is (= "fOO!bAR" (s/swap-case "Foo!Bar")))
