@@ -19,14 +19,15 @@
     :deprecated "1.2"
     :doc "String utilities for Clojure"}
   clojure.contrib.str-utils
-  (:import (java.util.regex Pattern)))
+  (:require [clojure.contrib.string :as ccs])
+  (:import (System.Text.RegularExpressions Regex)))
 
 (defn re-split
   "Splits the string on instances of 'pattern'.  Returns a sequence of
   strings.  Optional 'limit' argument is the maximum number of
   splits.  Like Perl's 'split'."
-  ([^Pattern pattern string] (seq (. pattern (split string))))
-  ([^Pattern pattern string limit] (seq (. pattern (split string limit)))))
+  ([^Regex pattern string] (seq (.Split pattern string)))
+  ([^Regex pattern string limit] (seq (.Split pattern string limit))))
 
 (defn re-partition
   "Splits the string into a lazy sequence of substrings, alternating
@@ -38,17 +39,8 @@
   For example: (re-partition #\"[a-z]+\" \"abc123def\")
 
   Returns: (\"\" \"abc\" \"123\" \"def\")"
-  [^Pattern re string]
-  (let [m (re-matcher re string)]
-    ((fn step [prevend]
-       (lazy-seq
-        (if (.find m)
-          (cons (.subSequence string prevend (.start m))
-                (cons (re-groups m)
-                      (step (+ (.start m) (count (.group m))))))
-          (when (< prevend (.length string))
-            (list (.subSequence string prevend (.length string)))))))
-     0)))
+  [^Regex re string]
+  (ccs/partition re string))
 
 (defn re-gsub 
   "Replaces all instances of 'pattern' in 'string' with
@@ -57,14 +49,14 @@
   If (ifn? replacment) is true, the replacement is called with the
   match.
   "
-  [^java.util.regex.Pattern regex replacement ^String string]
+  [^Regex regex replacement ^String string]
   (if (ifn? replacement)
     (let [parts (vec (re-partition regex string))]
       (apply str
              (reduce (fn [parts match-idx]
                        (update-in parts [match-idx] replacement))
                      parts (range 1 (count parts) 2))))
-    (.. regex (matcher string) (replaceAll replacement))))
+    (.Replace regex string replacement)))
 
 (defn re-sub
   "Replaces the first instance of 'pattern' in 'string' with
@@ -73,15 +65,15 @@
   If (ifn? replacement) is true, the replacement is called with
   the match.
   "
-  [^Pattern regex replacement ^String string]
+  [^Regex regex replacement ^String string]
   (if (ifn? replacement)
     (let [m (re-matcher regex string)]
       (if (.find m)
-        (str (.subSequence string 0 (.start m))
+        (str (.Substring string 0 (.start m))
              (replacement (re-groups m))
-             (.subSequence string (.end m) (.length string)))
+             (.Substring string (.end m)))
         string))
-    (.. regex (matcher string) (replaceFirst replacement))))
+    (.Replace regex string replacement 1)))
 
 
 (defn str-join
