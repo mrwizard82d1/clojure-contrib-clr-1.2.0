@@ -90,6 +90,6 @@
 
 (defn chomp
   "Removes all trailing newline \\n or return \\r characters from
-  string.  Note: String.trim() is similar and faster."
+  string.  Note: String.Trim() is similar and faster."
   [s]
   (re-sub #"[\r\n]+$" "" s))

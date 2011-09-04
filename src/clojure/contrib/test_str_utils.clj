@@ -45,18 +45,18 @@
 				"abc456def"))))
 
 
-;; (deftest test-str-join
-;;   (is (= test-string (str-join "123" ["abc" "def"]))))
+(deftest test-str-join
+  (is (= test-string (str-join "123" ["abc" "def"]))))
 
 
-;; (deftest test-chop
-;;   (is (= (.substring test-string 0 (dec (.length test-string)))
-;; 	 (chop test-string))))
+(deftest test-chop
+  (is (= (.Substring test-string 0 (dec (.Length test-string)))
+	 (chop test-string))))
 
 
-;; (deftest test-chomp
-;;   (is (= test-string (chomp (str test-string \n))))
-;;   (is (= test-string (chomp (str test-string "\r\n")))))
+(deftest test-chomp
+  (is (= test-string (chomp (str test-string "\n"))))
+  (is (= test-string (chomp (str test-string "\r\n")))))
 
 
 (defn fixture-fn [f]
